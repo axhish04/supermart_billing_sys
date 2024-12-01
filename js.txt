@@ -1,0 +1,94 @@
+let items = [];
+
+function showMenu(menuId) {
+    document.querySelectorAll('.menu').forEach(menu => menu.classList.add('hidden'));
+    document.getElementById(menuId).classList.remove('hidden');
+}
+
+function goBack() {
+    document.querySelectorAll('.menu').forEach(menu => menu.classList.add('hidden'));
+    document.getElementById('menu').classList.remove('hidden');
+}
+
+function addItem() {
+    const name = prompt("Enter item name:");
+    const price = parseFloat(prompt("Enter item price:"));
+    const qty = parseInt(prompt("Enter quantity:"), 10);
+    const tax = parseFloat(prompt("Enter tax percentage:"));
+    const discount = parseFloat(prompt("Enter discount percentage:"));
+
+    const gross = price + (price * (tax / 100));
+    const netAmt = qty * (gross - (gross * (discount / 100)));
+
+    const newItem = {
+        id: items.length + 1,
+        name,
+        price,
+        qty,
+        tax,
+        discount,
+        netAmt
+    };
+
+    items.push(newItem);
+    alert("Item added successfully!");
+}
+
+function editItem() {
+    const itemId = parseInt(prompt("Enter item ID to edit:"), 10);
+    const item = items.find(i => i.id === itemId);
+
+    if (item) {
+        item.name = prompt("Enter new name:", item.name);
+        item.price = parseFloat(prompt("Enter new price:", item.price));
+        item.qty = parseInt(prompt("Enter new quantity:", item.qty), 10);
+        item.tax = parseFloat(prompt("Enter new tax percentage:", item.tax));
+        item.discount = parseFloat(prompt("Enter new discount percentage:", item.discount));
+
+        const gross = item.price + (item.price * (item.tax / 100));
+        item.netAmt = item.qty * (gross - (gross * (item.discount / 100)));
+
+        alert("Item updated successfully!");
+    } else {
+        alert("Item not found!");
+    }
+}
+
+function deleteItem() {
+    const itemId = parseInt(prompt("Enter item ID to delete:"), 10);
+    const index = items.findIndex(i => i.id === itemId);
+
+    if (index !== -1) {
+        items.splice(index, 1);
+        alert("Item deleted successfully!");
+    } else {
+        alert("Item not found!");
+    }
+}
+
+function exitApp() {
+    const confirmation = confirm("Are you sure you want to exit?");
+    if (confirmation) {
+        alert("Thank you for using the billing system!");
+        window.close(); // This might not work in modern browsers for security reasons
+    }
+}
+
+document.getElementById('searchForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const itemId = parseInt(document.getElementById('itemId').value, 10);
+    const item = items.find(i => i.id === itemId);
+
+    if (item) {
+        document.getElementById('itemInfo').innerHTML = `
+            <p><strong>Item Name:</strong> ${item.name}</p>
+            <p><strong>Price:</strong> ${item.price}</p>
+            <p><strong>Quantity:</strong> ${item.qty}</p>
+            <p><strong>Tax:</strong> ${item.tax}%</p>
+            <p><strong>Discount:</strong> ${item.discount}%</p>
+            <p><strong>Net Amount:</strong> Rs.${item.netAmt}</p>
+        `;
+    } else {
+        document.getElementById('itemInfo').innerHTML = "<p>Item not found!</p>";
+    }
+});

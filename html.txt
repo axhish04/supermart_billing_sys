@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Market Billing</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Super Market Billing</h1>
+        <div id="menu">
+            <button onclick="showMenu('billReport')">1. Bill Report</button>
+            <button onclick="showMenu('manageItems')">2. Add/Remove/Edit Item</button>
+            <button onclick="showMenu('itemDetails')">3. Show Item Details</button>
+            <button onclick="exitApp()">4. Exit</button>
+        </div>
+        
+        <div id="billReport" class="menu hidden">
+            <h2>Bill Report</h2>
+            <div id="reportContent">
+                <!-- Bill report content will be rendered here -->
+            </div>
+            <button onclick="goBack()">Back</button>
+        </div>
+
+        <div id="manageItems" class="menu hidden">
+            <h2>Manage Items</h2>
+            <button onclick="addItem()">Add Item</button>
+            <button onclick="editItem()">Edit Item</button>
+            <button onclick="deleteItem()">Delete Item</button>
+            <button onclick="goBack()">Back</button>
+        </div>
+
+        <div id="itemDetails" class="menu hidden">
+            <h2>Item Details</h2>
+            <form id="searchForm">
+                <label for="itemId">Enter Item ID:</label>
+                <input type="number" id="itemId" required>
+                <button type="submit">Search</button>
+            </form>
+            <div id="itemInfo"></div>
+            <button onclick="goBack()">Back</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
